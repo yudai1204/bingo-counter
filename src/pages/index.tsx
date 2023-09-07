@@ -31,6 +31,7 @@ const SButton = (props: any) => {
           if (!canPush) return;
           setCanPush(false);
           //count stop
+          const answer = Math.floor(Math.random() * 75 + 1);
           clearInterval(interval);
           const stopCount = Math.random() * 5 + 5;
           let cnt = 0;
@@ -39,9 +40,12 @@ const SButton = (props: any) => {
             generateRandomNumber(usedList, setCount);
             if (cnt > stopCount) {
               clearInterval(inter);
-              setUsedList([...usedList, count]);
-              onClick(false);
-              setCanPush(true);
+              setTimeout(() => {
+                onClick(false);
+                setCanPush(true);
+                setCount(answer);
+                setUsedList([...usedList, answer]);
+              }, 300);
             }
           }, 300);
         } else {
