@@ -12,11 +12,11 @@ const generateRandomNumber = (used: number[], setCount: any) => {
   }
 };
 
-const generateRandomNumber2 = (used: number[]) => {
+const generateRandomNumber2 = (used: number[]): any => {
   const answer = Math.floor(Math.random() * 75 + 1);
   console.log(answer, used);
   if (used.includes(answer)) {
-    generateRandomNumber2(used);
+    return generateRandomNumber2(used);
   } else {
     return answer;
   }
@@ -51,7 +51,11 @@ const SButton = (props: any) => {
             if (cnt > stopCount) {
               clearInterval(inter);
               setTimeout(() => {
-                setUsedList([...usedList, answer].sort((a, b) => a - b));
+                setUsedList(
+                  [...usedList, answer]
+                    .filter((x) => x > 0)
+                    .sort((a, b) => a - b)
+                );
                 onClick(false);
                 setCanPush(true);
                 setCount(answer);
