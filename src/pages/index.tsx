@@ -12,6 +12,16 @@ const generateRandomNumber = (used: number[], setCount: any) => {
   }
 };
 
+const generateRandomNumber2 = (used: number[]) => {
+  const answer = Math.floor(Math.random() * 75 + 1);
+  console.log(answer, used);
+  if (used.includes(answer)) {
+    generateRandomNumber2(used);
+  } else {
+    return answer;
+  }
+};
+
 const SButton = (props: any) => {
   const [canPush, setCanPush] = useState(true);
   const {
@@ -31,9 +41,9 @@ const SButton = (props: any) => {
           if (!canPush) return;
           setCanPush(false);
           //count stop
-          const answer = Math.floor(Math.random() * 75 + 1);
+          const answer = generateRandomNumber2(usedList);
           clearInterval(interval);
-          const stopCount = Math.random() * 5 + 5;
+          const stopCount = Math.random() * 1 + 1;
           let cnt = 0;
           const inter = setInterval(() => {
             cnt++;
@@ -41,10 +51,10 @@ const SButton = (props: any) => {
             if (cnt > stopCount) {
               clearInterval(inter);
               setTimeout(() => {
+                setUsedList([...usedList, answer].sort((a, b) => a - b));
                 onClick(false);
                 setCanPush(true);
                 setCount(answer);
-                setUsedList([...usedList, answer]);
               }, 300);
             }
           }, 300);
