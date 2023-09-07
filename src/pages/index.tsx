@@ -77,7 +77,7 @@ export default function Home() {
   return (
     <Container mt="3vh">
       <Flex w="100%" mb="5vh">
-        <Box w="15%" />
+        <Box w="20%" />
         <Text
           fontSize="max(18vh,18vw)"
           lineHeight="max(18vh,18vw)"
@@ -87,7 +87,7 @@ export default function Home() {
         >
           {count}
         </Text>
-        <Box w="15%" position="relative">
+        <Box w="20%" position="relative">
           <Text
             fontSize="max(4vh,4vw)"
             color="#bbb"
@@ -128,7 +128,13 @@ export default function Home() {
                 <Text fontSize="max(2.5vh,2.5vw)">{item}</Text>
               ))}
             </Flex>
-            <Text color="#777" textAlign="right" mr=".5em" mt=".3em">
+            <Text
+              color="#777"
+              textAlign="right"
+              mr=".5em"
+              mt=".3em"
+              fontSize="max(2vh,2vw)"
+            >
               {usedList.length} / 75
             </Text>
           </Box>
