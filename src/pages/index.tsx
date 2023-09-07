@@ -13,6 +13,7 @@ const generateRandomNumber = (used: number[], setCount: any) => {
 };
 
 const SButton = (props: any) => {
+  const [canPush, setCanPush] = useState(true);
   const {
     setIsCount,
     isCount,
@@ -27,6 +28,8 @@ const SButton = (props: any) => {
       colorScheme={(isCount && "whatsapp") || "teal"}
       onClick={() => {
         if (isCount) {
+          if (!canPush) return;
+          setCanPush(false);
           //count stop
           clearInterval(interval);
           const stopCount = Math.random() * 5 + 5;
@@ -38,6 +41,7 @@ const SButton = (props: any) => {
               clearInterval(inter);
               setUsedList([...usedList, count]);
               onClick(false);
+              setCanPush(true);
             }
           }, 300);
         } else {
