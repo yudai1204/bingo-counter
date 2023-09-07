@@ -3,7 +3,7 @@ import { useState } from "react";
 
 let interval: NodeJS.Timeout;
 
-const generateRandomNumber = (used: number[], setCount) => {
+const generateRandomNumber = (used: number[], setCount: any) => {
   const random = Math.floor(Math.random() * 75 + 1);
   if (used.includes(random)) {
     generateRandomNumber(used, setCount);
