@@ -14,7 +14,6 @@ const generateRandomNumber = (used: number[], setCount: any) => {
 
 const generateRandomNumber2 = (used: number[]): any => {
   const answer = Math.floor(Math.random() * 75 + 1);
-  console.log(answer, used);
   if (used.includes(answer)) {
     return generateRandomNumber2(used);
   } else {
@@ -24,15 +23,8 @@ const generateRandomNumber2 = (used: number[]): any => {
 
 const SButton = (props: any) => {
   const [canPush, setCanPush] = useState(true);
-  const {
-    setIsCount,
-    isCount,
-    onClick,
-    usedList,
-    setUsedList,
-    setCount,
-    count,
-  } = props;
+  const { isCount, onClick, usedList, setUsedList, setCount, setLast, count } =
+    props;
   return (
     <Button
       colorScheme={(isCount && "whatsapp") || "teal"}
@@ -43,7 +35,7 @@ const SButton = (props: any) => {
           //count stop
           const answer = generateRandomNumber2(usedList);
           clearInterval(interval);
-          const stopCount = Math.random() * 1 + 1;
+          const stopCount = Math.random() * 3 + 2;
           let cnt = 0;
           const inter = setInterval(() => {
             cnt++;
@@ -64,6 +56,7 @@ const SButton = (props: any) => {
           }, 300);
         } else {
           //count start
+          setLast(count);
           onClick(true);
           interval = setInterval(() => {
             generateRandomNumber(usedList, setCount);
@@ -80,19 +73,34 @@ export default function Home() {
   const [isCount, setIsCount] = useState(false);
   const [count, setCount] = useState(0);
   const [usedList, setUsedList] = useState([]);
+  const [lastCount, setLastCount] = useState<number | undefined>(undefined);
   return (
-    <Container>
-      <Box>
-        <Center>
+    <Container mt="3vh">
+      <Flex w="100%" mb="5vh">
+        <Box w="15%" />
+        <Text
+          fontSize="max(18vh,18vw)"
+          lineHeight="max(18vh,18vw)"
+          fontWeight="bold"
+          color={isCount ? "#bbb" : "black"}
+          m="0 auto"
+        >
+          {count}
+        </Text>
+        <Box w="15%" position="relative">
           <Text
-            fontSize="20vh"
-            fontWeight="bold"
-            color={isCount ? "#bbb" : "black"}
+            fontSize="max(4vh,4vw)"
+            color="#bbb"
+            textAlign="right"
+            mr=".5em"
+            position="absolute"
+            bottom=".2em"
+            right="0"
           >
-            {count}
+            {lastCount || ""}
           </Text>
-        </Center>
-      </Box>
+        </Box>
+      </Flex>
       <Center>
         <SButton
           isCount={isCount}
@@ -101,23 +109,29 @@ export default function Home() {
           setCount={setCount}
           usedList={usedList}
           setUsedList={setUsedList}
+          setLast={setLastCount}
         />
       </Center>
       <Center>
         {usedList.length > 0 && (
-          <Flex
-            border="1px solid #ccc"
-            p="2vh"
-            maxW="80vw"
-            mt="3vh"
-            borderRadius="1vw"
-            flexWrap="wrap"
-            gap="2vh"
-          >
-            {usedList.map((item) => (
-              <Text>{item}</Text>
-            ))}
-          </Flex>
+          <Box>
+            <Flex
+              border="1px solid #ccc"
+              p="max(3vh,3vw)"
+              w="90vw"
+              mt="8vh"
+              borderRadius="1vw"
+              flexWrap="wrap"
+              gap="2vh"
+            >
+              {usedList.map((item) => (
+                <Text fontSize="max(2.5vh,2.5vw)">{item}</Text>
+              ))}
+            </Flex>
+            <Text color="#777" textAlign="right" mr=".5em" mt=".3em">
+              {usedList.length} / 75
+            </Text>
+          </Box>
         )}
       </Center>
     </Container>
